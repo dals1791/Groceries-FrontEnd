@@ -8,17 +8,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
+  // Deployed Db on Heroku URL
   const url = "https://grocery-list-sd.herokuapp.com";
+  // States and initalizers -----------------------------------
   const [lists, setLists] = useState([]);
-  
   const emptyList = { storeName: ""}
   const emptyItem = {
     name: "",
     qty: 0,
     category: ""}
   const[listId, setListId] = useState("")
+  const [itemId, setItemId ]= useState(emptyItem)
 
-  // Index - get all
+  // Index - get all Lists ---------------------------------
   const getLists = () => {
     axios.get(url + "/lists").then((res) => {
       const lists = res.data;
@@ -28,7 +30,7 @@ function App() {
   useEffect(() => {
     getLists();
   }, []);
-  // CREATE - create list
+  // CREATE - create list---------------------------
   const handleCreate = (newList) => {
     axios
       .post(url + "/lists", newList)
@@ -37,7 +39,7 @@ function App() {
       })
       .then(() => getLists());
   };
-  
+  // CREATE - create Item-------------------------
   const getListId = (listId) =>{
     setListId(listId)
   }
@@ -45,20 +47,49 @@ function App() {
     axios.post(url +'/items/' + listId, newItem)
     .then((res)=>{getLists()})
   }
-  
+  // DESTROY ----------------------------------------
+  // Lists ----
+  const deleteList = (list)=>{
+    axios.delete(url + '/lists/' + list._id)
+    .then((res)=>{getLists()})
+  }
+  // Items -----
+  const deleteItem = (item)=>{
+    axios.delete(url + '/items/' + item._id)
+    .then((res)=>{getLists()})
+  }
+  // UPDATE ------------------------------------------
+  // Items ------------
+  const getSelectedItem = (item) =>{
+    setItemId(item)
+  }
+  const handleUpdateItem = (item)=>{
+    axios.put(url +'/items/' + item._id, item)
+    .then((res)=>{getLists()})
+  }
+  // List name
+  const handleUpdateList = (list)=>{
+    axios.put(url +'/lists/' + list._id, list)
+    .then((res)=>{getLists()})
+  }
 
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <h1>I need Food!</h1>
       <Link to='/create'>
       <button>Add a List</button>
       </Link>
+      <hr/>
       <Route exact path="/" render={(rp) => 
-      <Display 
+      <div className="ListContainer"><Display 
         {...rp}
         lists={lists}
-        getListId={getListId} 
+        getListId={getListId}
+        deleteList={deleteList}
+        deleteItem={deleteItem}
+        getSelectedItem={getSelectedItem} 
       />
+      </div>
       }/>
       <Route exact path="/create" render={(rp) => (
           <Form
@@ -75,6 +106,24 @@ function App() {
             label="Add"
             item={emptyItem}
             handleSubmit={handleCreateItem}
+          />
+        )}
+      />
+      <Route exact path="/editItem" render={(rp) => (
+          <FormItem
+            {...rp}
+            label="Edit"
+            item={itemId}
+            handleSubmit={handleUpdateItem}
+          />
+        )}
+      />
+      <Route exact path="/editList" render={(rp) => (
+          <Form
+            {...rp}
+            label="Edit"
+            list={listId}
+            handleSubmit={handleUpdateList}
           />
         )}
       />

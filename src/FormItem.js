@@ -16,31 +16,34 @@ const FormItem = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        placeholder="Item"
-        value={formData.name}
-        onChange={handleChange}
-      />
-       <input
-        type= "number"
-        name="qty"
-        placeholder="qty"
-        value={formData.qty}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="category"
-        placeholder="category"
-        value={formData.category}
-        onChange={handleChange}
-      />
-      
-      <input type="submit" value={props.label} />
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Item"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <input
+          type= "number"
+          name="qty"
+          placeholder="qty"
+          value={formData.qty}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="category"
+          placeholder="category"
+          value={formData.category}
+          onChange={handleChange}
+        />
+        
+        <input type="submit" value={props.label} />
+      </form>
+    <button onClick={()=>{props.history.push("/")}}>Back</button>
+    </div>
   );
 };
 
