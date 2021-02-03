@@ -1,20 +1,23 @@
 import React from "react";
 
 const Display = (props) => {
-    const {lists} = props
+    const {lists, getListId, history} = props
   const loaded = () => {
     return (<div key={lists._id}>
             {lists.map((list) => {
                 return <article>
-                    <h2>{list.storeName}</h2>
+                    <h2>{list.storeName}<span>
+                        <button onClick={()=>
+                            {getListId(list._id) 
+                            history.push("/createItem")}}>+</button></span></h2>
                     
                     <div> {list.items.map((item)=>{
                         
-                        return<div key={item._id}>
+                        return<ul key={item._id}>
                            
-                            <h3>{item}</h3>
+                            <li>{item.name} qty:{item.qty} </li>
                             
-                            </div>
+                            </ul>
                     })}
                     </div>
                 </article>
