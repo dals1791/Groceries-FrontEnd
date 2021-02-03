@@ -16,8 +16,10 @@ const Form = (props) => {
   };
 
   return (
+    <div className="formContainer">
     <form onSubmit={handleSubmit}>
       <input
+        className="inputField"
         type="text"
         name="storeName"
         placeholder="Store Name"
@@ -25,8 +27,11 @@ const Form = (props) => {
         onChange={handleChange}
       />
       
-      <input type="submit" value={props.label} />
+      <input className="formSubmit" type="submit" value={props.label} />
     </form>
+    <button className="backButton" onClick={()=>{props.history.push("/")}}>Back</button>
+    </div>
+    
   );
 };
 

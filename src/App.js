@@ -75,22 +75,26 @@ function App() {
 
   return (
     <div className="App">
+      <header>
       <h1>I need Food!</h1>
       <Link to='/create'>
       <button>Add a List</button>
       </Link>
-      <hr/>
+      </header>
+      
+      <div className="listContainer">
       <Route exact path="/" render={(rp) => 
-      <div className="ListContainer"><Display 
-        {...rp}
-        lists={lists}
-        getListId={getListId}
-        deleteList={deleteList}
-        deleteItem={deleteItem}
-        getSelectedItem={getSelectedItem} 
-      />
-      </div>
+      <Display 
+          {...rp}
+          lists={lists}
+          getListId={getListId}
+          deleteList={deleteList}
+          deleteItem={deleteItem}
+          getSelectedItem={getSelectedItem} 
+        />
+      
       }/>
+      </div>
       <Route exact path="/create" render={(rp) => (
           <Form
             {...rp}

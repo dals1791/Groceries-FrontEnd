@@ -10,7 +10,7 @@ const Display = (props) => {
                     <span>
                         <button onClick={()=>{getListId(list)
                         history.push("/editList")}}>Edit</button>
-                        <button onClick={()=>{deleteList(list)}}>Delete List</button>
+                        <button onClick={()=>{deleteList(list)}}>X</button>
                         </span></h2>
                     
                     <div> {list.items.map((item)=>{
@@ -18,7 +18,7 @@ const Display = (props) => {
                         return<ul style={{listStyleType: "none"}} key={item._id}>
                            
                                 <li style={{textDecoration: "none"}}>{item.name} qty:{item.qty} 
-                                    <span>
+                                    <span className="itemSpan">
                                         <button onClick={()=>{getSelectedItem(item)
                                         history.push("/editItem")}}>Edit</button>
 
@@ -32,12 +32,12 @@ const Display = (props) => {
                     </div>
                     <button onClick={()=>
                             {getListId(list._id) 
-                            history.push("/createItem")}}>+</button>
+                            history.push("/createItem")}}>+ Item</button>
                 </article>
             })}
         </div>)
   };
-  const loading = <h1>Loading...</h1>;
+  const loading = <h2>Add a List</h2>;
 
   return props.lists.length >0 ? loaded() : loading
 };
